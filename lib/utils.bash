@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-GH_REPO="git@github.com:yamaya-masayuki/asdf-golang-aux.git"
+GH_REPO="https://github.com/yamaya-masayuki/asdf-golang-aux.git"
 TOOL_NAME="golang-aux"
 TOOL_TEST="golang-aux --help"
 
