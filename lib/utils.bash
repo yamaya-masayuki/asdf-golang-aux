@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-# TODO: Ensure this is the correct GitHub homepage where releases can be downloaded for golang-aux.
-GH_REPO="https://github.com/yamaya-masayuki/golang-aux"
+GH_REPO="git@github.com:yamaya-masayuki/asdf-golang-aux.git"
 TOOL_NAME="golang-aux"
 TOOL_TEST="golang-aux --help"
 
