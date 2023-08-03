@@ -6,8 +6,6 @@ GH_REPO="https://github.com/yamaya-masayuki/asdf-golang-aux"
 TOOL_NAME="golang-aux"
 TOOL_TEST="bin/go --help"
 
-set -x
-
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
 	exit 1
