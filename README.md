@@ -44,7 +44,7 @@ go --help
 Check [asdf](https://github.com/asdf-vm/asdf) readme for more instructions on how to
 install & manage versions.
 
-# Archiving
+# To support another version
 
 If you want to build golang on your own, please refer to [fkr | go on darwin/arm64](https://hazardous.org/archive/blog/go/apple/2020/11/26/go-on-darwin-arm64), cross-compile and upload the resulting archive (.tbz) to `archive/`.
 
