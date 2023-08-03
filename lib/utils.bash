@@ -2,9 +2,11 @@
 
 set -euo pipefail
 
-GH_REPO="https://github.com/yamaya-masayuki/asdf-golang-aux.git"
+GH_REPO="https://github.com/yamaya-masayuki/asdf-golang-aux"
 TOOL_NAME="golang-aux"
-TOOL_TEST="golang-aux --help"
+TOOL_TEST="bin/go --help"
+
+set -x
 
 fail() {
 	echo -e "asdf-$TOOL_NAME: $*"
@@ -24,14 +26,12 @@ sort_versions() {
 }
 
 list_github_tags() {
-	git ls-remote --tags --refs "$GH_REPO" |
+	git ls-remote --tags --refs "$GH_REPO".git |
 		grep -o 'refs/tags/.*' | cut -d/ -f3- |
 		sed 's/^v//' # NOTE: You might want to adapt this sed to remove non-version strings from tags
 }
 
 list_all_versions() {
-	# TODO: Adapt this. By default we simply list the tag names from GitHub releases.
-	# Change this function if golang-aux has other means of determining installable versions.
 	list_github_tags
 }
 
@@ -40,8 +40,7 @@ download_release() {
 	version="$1"
 	filename="$2"
 
-	# TODO: Adapt the release URL convention for golang-aux
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	url="https://media.githubusercontent.com/media/yamaya-masayuki/asdf-golang-aux/main/archive/v${version}-bootstrap.tbz"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -50,7 +49,7 @@ download_release() {
 install_version() {
 	local install_type="$1"
 	local version="$2"
-	local install_path="${3%/bin}/bin"
+	local install_path="${3%/bin}"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
@@ -58,12 +57,12 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+		cp -r "$ASDF_DOWNLOAD_PATH" "$install_path"/go
 
-		# TODO: Assert golang-aux executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
+		ls "$install_path"
+		test -x "$install_path/go/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (
