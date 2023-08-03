@@ -59,7 +59,6 @@ install_version() {
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		ls "$install_path/go/$tool_cmd"
 		test -x "$install_path/go/$tool_cmd" || fail "Expected $install_path/go/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
