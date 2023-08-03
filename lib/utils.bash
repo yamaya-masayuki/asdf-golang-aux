@@ -59,12 +59,12 @@ install_version() {
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
-		ls "$install_path"
-		test -x "$install_path/go/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
+		ls "$install_path/go/$tool_cmd"
+		test -x "$install_path/go/$tool_cmd" || fail "Expected $install_path/go/$tool_cmd to be executable."
 
 		echo "$TOOL_NAME $version installation was successful!"
 	) || (
-		rm -rf "$install_path"
+		#rm -rf "$install_path"
 		fail "An error occurred while installing $TOOL_NAME $version."
 	)
 }
